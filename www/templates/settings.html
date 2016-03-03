@@ -1,0 +1,43 @@
+<ion-side-menus enable-menu-with-back-views="false">
+    <ion-side-menu-content>
+        <ion-nav-bar class="bar-stable">
+            <ion-nav-back-button></ion-nav-back-button>
+            <ion-nav-buttons side="left">
+                <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+            </ion-nav-buttons>
+        </ion-nav-bar>
+        <ion-nav-view name="side-menu"></ion-nav-view>
+    </ion-side-menu-content>
+    <ion-side-menu side="left">
+        <ion-header-bar class="bar-stable">
+            <div class="title">Settings</div>
+        </ion-header-bar>
+        <ion-content padding="true" class="side-menu-left has-header">
+            <form class="list">
+                <h5>Range</h5>
+                <ion-item class="range range-positive">
+                    <input type="range" value="50" min="0" max="100" name="price">
+                </ion-item>
+                <h5>Price</h5>
+                <ion-item class="range range-positive">
+                    <input type="range" value="50" min="0" max="100" name="price">
+                </ion-item>
+                <h5># People</h5>
+                <ion-item class="range range-positive">
+                    <input type="range" value="50" min="0" max="100" name="price">
+                </ion-item>
+                <h5>Age</h5>
+                <ion-item class="range range-positive">
+                    <input type="range" value="50" min="0" max="100" name="price">
+                </ion-item>
+                <div class="button-bar">
+                    <button class="button button-positive button-block  icon ion-male"></button>
+                    <button class="button button-positive button-block  icon ion-female"></button>
+                    <button class="button button-positive button-block  icon ion-wineglass"></button>
+                </div>
+            </form>
+            <a ui-sref="settings.home" menu-close="" class="button button-positive button-block  icon ion-fork"></a>
+            <a ui-sref="settings.profile" menu-close="" class="button button-positive button-block  icon ion-ios-gear"></a>
+        </ion-content>
+    </ion-side-menu>
+</ion-side-menus>
