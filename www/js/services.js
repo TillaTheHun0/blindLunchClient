@@ -1,10 +1,8 @@
 angular.module('app.services', [])
 
-.factory('BlankFactory', [function(){
-
+.factory('Auth', ['rootRef', '$firebaseAuth', function(rootRef, $firebaseAuth) {
+    return $firebaseAuth(rootRef);
 }])
 
-.service('BlankService', [function(){
 
-}]);
 
