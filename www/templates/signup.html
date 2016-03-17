@@ -16,6 +16,7 @@
                 </label>
             </ion-list>
             <button class="button button-stable button-block " ng-click="createAccount(name, username, password)">Sign up</button>
+            <label ng-show="error">{{error}}</label>
         </form>
     </ion-content>
 </ion-view>
