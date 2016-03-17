@@ -10,7 +10,7 @@ angular.module('app.routes', [])
     
   
 
-  .state('settings.home', {
+  .state('blindLunch.home', {
     url: '/home',
     views: {
       'side-menu': {
@@ -20,7 +20,7 @@ angular.module('app.routes', [])
     }
   })
 
-  .state('settings.profile', {
+  .state('blindLunch.profile', {
     url: '/profile',
     views: {
       'side-menu': {
@@ -30,7 +30,7 @@ angular.module('app.routes', [])
     }
   })
 
-  .state('settings', {
+  .state('blindLunch', {
     url: '/side-menu',
     templateUrl: 'templates/settings.html',
     abstract:true
