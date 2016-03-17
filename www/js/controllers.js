@@ -61,15 +61,16 @@ angular.module('app.controllers', [])
         });
     };
     
-    $scope.localLogin = function(email, password){
+    $scope.localLogin = function(username, password){
+        console.log(username + ' ' + password);
         firebaseAuth.$authWithPassword({
-            email: parseEmail(email),
+            email: username,
             password: password
         }).then(function(authData){
             console.log('logged in as: ' + authData.uid);
             $state.go('blindLunch.home');
         }).catch(function(error){
-            console.error('Authentication failed');
+            console.error('Authentication failed ', error);
         })
     };
 }])
