@@ -1,5 +1,15 @@
 <ion-view title="Home">
     <ion-content overflow-scroll="true" padding="true" class="has-header has-footer">
-        <form class="list"></form>
+        <body ng-controller="homeCtrl">
+            <ion-header-bar class="bar-dark">
+                <h1 class="title">Map</h1>
+            </ion-header-bar>
+            <ion-content>
+                <div id="map" data-tap-disabled="true"></div>
+            </ion-content>
+            <ion-footer-bar class="bar-dark" ng-init="init()">
+                <a ng-click="centerOnMe()" class="button button-icon icon ion-navigate">Find Me</a>
+            </ion-footer-bar>
+        </body>
     </ion-content>
 </ion-view>
