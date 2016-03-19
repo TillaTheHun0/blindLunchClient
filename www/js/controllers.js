@@ -116,8 +116,11 @@ angular.module('app.controllers', [])
     }
 })
    
-.controller('profileCtrl', function($scope) {
-
+.controller('profileCtrl', function($scope, firebaseAuth, $state) {
+	   $scope.signOut = function(){
+           firebaseAuth.$unauth();
+           $state.go('login');
+       } 
 })
       
 .controller('signupCtrl', function($scope, firebaseAuth, rootRef, $state) {
