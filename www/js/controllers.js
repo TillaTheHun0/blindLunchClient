@@ -1,12 +1,13 @@
 angular.module('app.controllers', [])
 
-.controller('loginCtrl', ['firebaseAuth', '$scope', '$state', 'rootRef', function(firebaseAuth, $scope, $state, rootRef) {
+.controller('loginCtrl', ['firebaseAuth', '$rootScope', '$scope', '$state', 'rootRef', function(firebaseAuth, $rootScope, $scope, $state, rootRef) {
     /**
      * Listen for changes in authentication state
      */
     firebaseAuth.$onAuth(function(authData){
         //someone is logged in
         if(authData){
+            $rootScope.uid = authData.uid;
             rootRef.child('users').child(authData.uid).on('value', function(snapshot){
                 //if user node doesn't exist ie. new user
                 if(!snapshot.val()){
@@ -19,7 +20,7 @@ angular.module('app.controllers', [])
                 }
                 //log and go to home screen
                 console.log("Already authenticated. Logged in as: " + authData.uid);
-                $state.go('blindLunch.home');  
+                $state.go('blindLunch.home');
             }); 
         }
         else{
@@ -57,6 +58,7 @@ angular.module('app.controllers', [])
         firebaseAuth.$authWithOAuthPopup('facebook', permissions)
         .then(function(authData) {
             console.log(authData);
+            $rootScope.uid = authData.uid;
             $state.go('blindLunch.home');
         });
     };
@@ -68,6 +70,7 @@ angular.module('app.controllers', [])
             password: password
         }).then(function(authData){
             console.log('logged in as: ' + authData.uid);
+            $rootScope.uid = authData.uid;
             $state.go('blindLunch.home');
         }).catch(function(error){
             console.error('Authentication failed ', error);
