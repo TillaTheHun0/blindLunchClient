@@ -1,12 +1,13 @@
 angular.module('app.controllers', [])
 
-.controller('loginCtrl', ['firebaseAuth', '$scope', '$state', 'rootRef', function(firebaseAuth, $scope, $state, rootRef) {
+.controller('loginCtrl', ['firebaseAuth', '$rootScope', '$scope', '$state', 'rootRef', function(firebaseAuth, $rootScope, $scope, $state, rootRef) {
     /**
      * Listen for changes in authentication state
      */
     firebaseAuth.$onAuth(function(authData){
         //someone is logged in
         if(authData){
+            $rootScope.uid = authData.uid;
             rootRef.child('users').child(authData.uid).on('value', function(snapshot){
                 //if user node doesn't exist ie. new user
                 if(!snapshot.val()){
@@ -116,11 +117,24 @@ angular.module('app.controllers', [])
     }
 })
    
-.controller('profileCtrl', function($scope, firebaseAuth, $state) {
+.controller('profileCtrl', function($scope, firebaseAuth, $state, rootRef, $rootScope, $ionicLoading) {
 	   $scope.signOut = function(){
            firebaseAuth.$unauth();
            $state.go('login');
        } 
+       $scope.saveInfo = function(firstName, lastName, description){          
+           $ionicLoading.show({template: '<ion-spinner icon="ripple"></ion-spinner>'});
+           rootRef.child("users").child($rootScope.uid).update(
+               {firstName:firstName,
+                lastName:lastName,
+                description:description
+               },
+                function(){
+                    $ionicLoading.hide();
+                }            
+            );
+           
+       }
 })
       
 .controller('signupCtrl', function($scope, firebaseAuth, rootRef, $state) {
