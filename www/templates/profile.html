@@ -10,19 +10,22 @@
                     <form class="list">
                         <label class="item item-input" name="firstName">
                             <span class="input-label">First</span>
-                            <input type="text" placeholder="first">
+                            <input type="text" placeholder="first" ng-model="firstName">
                         </label>
                         <label class="item item-input" name="lastName">
                             <span class="input-label">Last</span>
-                            <input type="text" placeholder="last">
+                            <input type="text" placeholder="last" ng-model="lastName">
                         </label>
                         <label class="item item-input" name="description">
-                            <span class="input-label">Description</span><textarea placeholder="description"> </textarea>
+                            <span class="input-label">Description</span><textarea placeholder="description" ng-model="description"> </textarea>
                         </label>
                     </form>
                 </div>
             </div>
         </form>
+        <button class="button button-block button-positive" ng-click="saveInfo(firstName, lastName, description)">
+             Save
+        </button>
     </ion-content>
     <div class="bar bar-footer bar-assertive" ng-click="signOut()">
         <div class="title">Sign Out</div>

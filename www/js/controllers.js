@@ -119,11 +119,24 @@ angular.module('app.controllers', [])
     }
 })
    
-.controller('profileCtrl', function($scope, firebaseAuth, $state) {
+.controller('profileCtrl', function($scope, firebaseAuth, $state, rootRef, $rootScope, $ionicLoading) {
 	   $scope.signOut = function(){
            firebaseAuth.$unauth();
            $state.go('login');
        } 
+       $scope.saveInfo = function(firstName, lastName, description){          
+           $ionicLoading.show({template: '<ion-spinner icon="ripple"></ion-spinner>'});
+           rootRef.child("users").child($rootScope.uid).update(
+               {firstName:firstName,
+                lastName:lastName,
+                description:description
+               },
+                function(){
+                    $ionicLoading.hide();
+                }            
+            );
+           
+       }
 })
       
 .controller('signupCtrl', function($scope, firebaseAuth, rootRef, $state) {
