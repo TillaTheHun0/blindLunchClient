@@ -33,8 +33,7 @@ angular.module('app.routes', [])
   .state('blindLunch', {
     url: '/side-menu',
     templateUrl: 'templates/settings.html',
-    abstract:true, 
-    controller:'settingsCtrl'
+    abstract:true
   })
 
   .state('signup', {
