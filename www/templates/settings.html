@@ -14,25 +14,26 @@
         </ion-header-bar>
         <ion-content padding="true" class="side-menu-left has-header">
             <form class="list">
-                <h5>Radius (mi.)</h5>
-                <ion-item class="range range-positive">             
-                    <rzslider rz-slider-model="radiusSlider.value" rz-slider-options="radiusSlider.options"></rzslider>
+                <h5>Range</h5>
+                <ion-item class="range range-positive">
+                    <input type="range" value="50" min="0" max="100" name="price">
                 </ion-item>
                 <h5>Price</h5>
                 <ion-item class="range range-positive">
-                    <rzslider rz-slider-model="priceSlider.value"" rz-slider-options="priceSlider.options"></rzslider>
+                    <input type="range" value="50" min="0" max="100" name="price">
                 </ion-item>
                 <h5># People</h5>
                 <ion-item class="range range-positive">
-                    <rzslider rz-slider-model="participantSlider.min" rz-slider-high="participantSlider.max" rz-slider-options="participantSlider.options"></rzslider>
+                    <input type="range" value="50" min="0" max="100" name="price">
                 </ion-item>
                 <h5>Age</h5>
                 <ion-item class="range range-positive">
-                    <rzslider rz-slider-model="ageSlider.min" rz-slider-high="ageSlider.max" rz-slider-options="ageSlider.options"></rzslider>
+                    <input type="range" value="50" min="0" max="100" name="price">
                 </ion-item>
                 <div class="button-bar">
                     <button class="button button-positive button-block  icon ion-male"></button>
                     <button class="button button-positive button-block  icon ion-female"></button>
+                    <button class="button button-positive button-block  icon ion-wineglass"></button>
                 </div>
             </form>
             <a ui-sref="blindLunch.home" menu-close="" class="button button-positive button-block  icon ion-fork"></a>
