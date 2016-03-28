@@ -8,7 +8,7 @@ angular.module('app.controllers', [])
         //someone is logged in
         if(authData){
             $rootScope.uid = authData.uid;
-            rootRef.child('users').child(authData.uid).on('value', function(snapshot){
+            rootRef.child('users').child(authData.uid).once('value', function(snapshot){
                 //if user node doesn't exist ie. new user
                 if(!snapshot.val()){
                     //create new user node
@@ -119,21 +119,24 @@ angular.module('app.controllers', [])
     }
 })
    
-.controller('profileCtrl',function($scope, firebaseAuth, $state, rootRef, $rootScope, $ionicLoading, Spinner) {
-	   $scope.signOut = function(){
+.controller('profileCtrl', function($scope, firebaseAuth, $state, rootRef, $rootScope, $ionicLoading, Spinner, firebaseObject, $timeout) {
+	   var authObject = firebaseAuth.$getAuth();
+       var userNodeRef = rootRef.child('users').child(authObject.uid);
+       var userNode = firebaseObject(userNodeRef);
+       
+       //userNode.$bindTo($scope, 'user');
+       $scope.user = userNode;
+       
+       $scope.signOut = function(){
            firebaseAuth.$unauth();
            $state.go('login');
        } 
-       $scope.saveInfo = function(firstName, lastName, description){          
+       $scope.saveInfo = function(){          
            Spinner.show(function(){
-               rootRef.child("users").child($rootScope.uid).update(
-                {   
-                    firstName:firstName,
-                    lastName:lastName,
-                    description:description
-                },
-                Spinner.hide()           
-            );
+               $timeout(function(){ //timeout to simulate latency
+                  $scope.user.$save();
+                  Spinner.hide()  
+               }, 2000);          
            }); 
        }
 })

@@ -10,20 +10,20 @@
                     <form class="list">
                         <label class="item item-input" name="firstName">
                             <span class="input-label">First</span>
-                            <input type="text" placeholder="first" ng-model="firstName">
+                            <input type="text" placeholder="first" ng-model="user.firstName">
                         </label>
                         <label class="item item-input" name="lastName">
                             <span class="input-label">Last</span>
-                            <input type="text" placeholder="last" ng-model="lastName">
+                            <input type="text" placeholder="last" ng-model="user.lastName">
                         </label>
                         <label class="item item-input" name="description">
-                            <span class="input-label">Description</span><textarea placeholder="description" ng-model="description"> </textarea>
+                            <span class="input-label">Description</span><textarea placeholder="description" ng-model="user.description"> </textarea>
                         </label>
                     </form>
                 </div>
             </div>
         </form>
-        <button class="button button-block button-positive" ng-click="saveInfo(firstName, lastName, description)">
+        <button class="button button-block button-positive" ng-click="saveInfo()">
              Save
         </button>
     </ion-content>
