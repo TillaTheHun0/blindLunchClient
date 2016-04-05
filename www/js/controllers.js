@@ -21,13 +21,13 @@ angular.module('app.controllers', [])
                 //log and go to home screen
                 console.log("Already authenticated. Logged in as: " + authData.uid);
                 $state.go('blindLunch.home');
-            }); 
+            });
         }
         else{
             console.log("logged out");
         }
     });
-    
+
     function getName(authData){
         switch(authData.provider){
             case 'password':
@@ -36,24 +36,24 @@ angular.module('app.controllers', [])
                 return authData.facebook.displayName;
         };
     };
-    
+
     function getEmail(authData){
        switch(authData.provider){
             case 'password':
                 return parseEmail(authData.password.email)
             case 'facebook':
                 return parseEmail(authData.facebook.email);
-        }; 
+        };
     };
-    
+
     function parseEmail(email){
         return email.replace(/\./, ',');
     };
-    
+
     var permissions = {
         scope: 'email'
     };
-    
+
     $scope.facebookLogin = function(){
         firebaseAuth.$authWithOAuthPopup('facebook', permissions)
         .then(function(authData) {
@@ -62,7 +62,7 @@ angular.module('app.controllers', [])
             $state.go('blindLunch.home');
         });
     };
-    
+
     $scope.localLogin = function(username, password){
         console.log(username + ' ' + password);
         firebaseAuth.$authWithPassword({
@@ -77,20 +77,20 @@ angular.module('app.controllers', [])
         })
     };
 }])
-  
-.controller('homeCtrl', function($scope, $ionicLoading) {
+
+.controller('homeCtrl', function($scope, $ionicLoading, mapProperties) {
     $scope.init = function () {
         var myLatLng = new google.maps.LatLng('32.785908', '-79.936322');
-        
+
         var mapOptions = {
             center: myLatLng,
             zoom: 14,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
-        
+
         var map = new google.maps.Map(document.getElementById("map"),
             mapOptions);
-            
+
         var request = {
           location: myLatLng,
           radius: '2000',
@@ -99,7 +99,7 @@ angular.module('app.controllers', [])
 
         var infowindow = new google.maps.InfoWindow();
         var service = new google.maps.places.PlacesService(map);
-        
+
         service.radarSearch(request, function(results, status) {
             if (status == google.maps.places.PlacesServiceStatus.OK) {
                 for (var i = 0; i < results.length; i++) {
@@ -119,7 +119,7 @@ angular.module('app.controllers', [])
                             scaledSize: new google.maps.Size(20, 20)
                         }
                     });
-                    
+
                     google.maps.event.addListener(marker, 'click', (function(marker, i) {
                         return function() {
                             service.getDetails({ placeId: marker.customInfo.place_id }, function (place, status) {
@@ -138,7 +138,7 @@ angular.module('app.controllers', [])
                 }
             }
         });
-        
+
         $scope.map = map;
     }
 
@@ -160,29 +160,29 @@ angular.module('app.controllers', [])
         });
     }
 })
-   
+
 .controller('profileCtrl', function($scope, firebaseAuth, $state, rootRef, $rootScope, $ionicLoading, Spinner, firebaseObject, $timeout) {
 	   var authObject = firebaseAuth.$getAuth();
        var userNodeRef = rootRef.child('users').child(authObject.uid);
        var userNode = firebaseObject(userNodeRef);
-       
+
        //userNode.$bindTo($scope, 'user');
        $scope.user = userNode;
-       
+
        $scope.signOut = function(){
            firebaseAuth.$unauth();
            $state.go('login');
-       } 
-       $scope.saveInfo = function(){          
+       }
+       $scope.saveInfo = function(){
            Spinner.show(function(){
                $timeout(function(){ //timeout to simulate latency
                   $scope.user.$save();
-                  Spinner.hide()  
-               }, 2000);          
-           }); 
+                  Spinner.hide()
+               }, 2000);
+           });
        }
 })
-      
+
 .controller('signupCtrl', function($scope, firebaseAuth, rootRef, $state) {
     /**
      * Create Account with username password
@@ -200,7 +200,7 @@ angular.module('app.controllers', [])
                 provider: 'local'
             }, function(error){
                if(error){
-                 $scope.error = error;  
+                 $scope.error = error;
                } else {
                    $state.go('login');
                }
@@ -210,50 +210,60 @@ angular.module('app.controllers', [])
             $scope.error = error;
         });
     }
-    
+
     function parseEmail(email){
         return email.replace(/\./, ',');
     };
 })
-.controller('settingsCtrl', function($scope, rootRef) {
-    $scope.radiusSlider = { 
+.controller('settingsCtrl', function($scope, rootRef, mapProperties) {
+
+    mapProperties.setProperty('1000');
+    $scope.yes = mapProperties.getProperty();
+
+    
+    $scope.$watch("radiusSlider.value", function() {
+        mapProperties.setProperty($scope.radiusSlider.value); 
+        console.log(mapProperties.getProperty());
+    });
+
+    $scope.radiusSlider = {
         value: 10,
-        options: { 
-            floor: 0, 
-            ceil: 50, 
-            step: 5 
+        options: {
+            floor: 0,
+            ceil: 50,
+            step: 5
         }
     };
-                    
-   $scope.priceSlider = { 
+
+   $scope.priceSlider = {
         value: 2,
-        options: { 
-            floor: 1, 
-            ceil: 3, 
-            step: 1 
+        options: {
+            floor: 1,
+            ceil: 3,
+            step: 1
         }
     };
-                         
-    $scope.participantSlider = { 
+
+    $scope.participantSlider = {
         min: 1,
         max: 5,
-        options: { 
-            floor: 1, 
-            ceil: 10, 
+        options: {
+            floor: 1,
+            ceil: 10,
             step: 1,
             noSwitching: true
         }
     };
-    
-    $scope.ageSlider = { 
+
+    $scope.ageSlider = {
         min: 20,
         max: 30,
-        options: { 
-            floor: 16, 
-            ceil: 40, 
+        options: {
+            floor: 16,
+            ceil: 40,
             step: 1,
             noSwitching: true
         }
     };
+
 })
- 

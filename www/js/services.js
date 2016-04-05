@@ -43,4 +43,26 @@ angular.module('app.services', [])
     }
 }])
 
+/**
+ * Shared map properties for use with sliders
+ */
+.service('mapProperties', function() {
+    
+    var defaultProp = '2000'; 
+    
+    return {
+        setProperty: function(value) {
+            defaultProp = value.toString();
+        },
+        getProperty: function() {
+            return defaultProp; 
+        },
+        setMapRadius: function(value) { 
+            if(value != defaultProp) { 
+                homeCtrl.request.radius = value.toString(); 
+            }
+        } 
+    };
+})
+
 
