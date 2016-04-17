@@ -1,7 +1,7 @@
 'user strict'
 
 angular.module('blind-lunch')
-    .controller('profileCtrl', function($scope, firebaseAuth, $state, rootRef, $rootScope, $ionicLoading, Spinner, firebaseObject, $timeout) {
+    .controller('profileCtrl', function($scope, firebaseAuth, $state, rootRef, $rootScope, Spinner, firebaseObject, $timeout) {
         var authObject = firebaseAuth.$getAuth();
         var userNodeRef = rootRef.child('users').child(authObject.uid);
         var userNode = firebaseObject(userNodeRef);

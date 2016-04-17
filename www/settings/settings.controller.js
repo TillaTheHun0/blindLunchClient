@@ -1,7 +1,7 @@
 'user strict'
 
 angular.module('blind-lunch')
-    .controller('settingsCtrl', function($scope, rootRef, $cordovaGeolocation, firebaseAuth) {
+    .controller('settingsCtrl', function($scope, rootRef, $cordovaGeolocation, firebaseAuth, Spinner) {
         var auth = firebaseAuth.$getAuth();
         
         var geolocationOpt = {
@@ -14,7 +14,7 @@ angular.module('blind-lunch')
             rootRef.child('users').child(auth.uid).child('lunches').push({
                 ref: data.toString(),
                 complete: false
-            }); 
+            }, Spinner.hide()); 
         };
         
         var postLunch = function pushLunch(pos){
@@ -85,23 +85,25 @@ angular.module('blind-lunch')
         $scope.postLunch = function() {
             var isCordovaApp = (typeof window.cordova !== "undefined");
             //get location
-            if(isCordovaApp){
-                console.log('cordova app');
-               $cordovaGeolocation.getCurrentPosition(geolocationOpt)
-                .then(function(pos){
-                    postLunch(pos);
-                }, function(error){
-                    console.log(error);
-                }); 
-            }
-            else{
-                console.log('browser app')
-                navigator.geolocation.getCurrentPosition(function (pos) {
-                    postLunch(pos);
-                }, function (error) {
-                    console.log(error)
-                });    
-            }
+            Spinner.show(function() {
+               if(isCordovaApp){
+                    console.log('cordova app');
+                $cordovaGeolocation.getCurrentPosition(geolocationOpt)
+                    .then(function(pos){
+                        postLunch(pos);
+                    }, function(error){
+                        console.log(error);
+                    }); 
+                }
+                else{
+                    console.log('browser app')
+                    navigator.geolocation.getCurrentPosition(function (pos) {
+                        postLunch(pos);
+                    }, function (error) {
+                        console.log(error)
+                    });    
+                } 
+            });
         };
         
     })
