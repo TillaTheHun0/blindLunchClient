@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "angularfire": "^1.1.4",
-    "angularjs-slider": "^2.11.0"
+    "angularjs-slider": "^2.11.0",
+    "ngCordova": "^0.1.26-alpha"
   }
 }
